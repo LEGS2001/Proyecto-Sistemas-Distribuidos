@@ -25,18 +25,12 @@ public class Interfaz extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        Interfaz gui = new Interfaz();
-        gui.setVisible(true);
-    }
-
     // Clase Casilla
     private class Casilla extends JPanel {
         private int estado;
 
         public Casilla() {
             setPreferredSize(new Dimension(70, 70));
-            // setPreferredSize(new Dimension(500/7, 500/6));
             estado = 0;
             setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
@@ -49,9 +43,7 @@ public class Interfaz extends JFrame {
                     } else if (e.getButton() == 3){ // click derecho
                         estado = 0;
                         repaint();
-                    }
-
-                 
+                    }    
                 }
             });
         }
@@ -66,10 +58,5 @@ public class Interfaz extends JFrame {
             }
             g.fillRect(0, 0, getWidth(), getHeight());
         }
-    }
-    
-    
-    
-    
-    
+    }    
 }
