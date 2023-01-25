@@ -5,7 +5,7 @@ import java.awt.event.*;
 public class Interfaz extends JFrame {
     private Casilla[][] casillas;
 
-    public Interfaz() {
+    public Interfaz(int[][] jugador) {
         setTitle("Batalla de Barcos");
         setSize(500, 500);
         setLocationRelativeTo(null);
@@ -17,9 +17,10 @@ public class Interfaz extends JFrame {
 
         // Crear la matriz de casillas
         casillas = new Casilla[7][6];
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 6; j++) {
+        for (int i = 0; i < jugador.length; i++) {
+            for (int j = 0; j < jugador[i].length; j++) {
                 casillas[i][j] = new Casilla();
+                casillas[i][j].estado = jugador[i][j];
                 add(casillas[i][j]);
             }
         }
@@ -31,8 +32,7 @@ public class Interfaz extends JFrame {
 
         public Casilla() {
             setPreferredSize(new Dimension(70, 70));
-            estado = 0;
-            setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            setBorder(BorderFactory.createLineBorder(Color.GRAY, 6));
 
             addMouseListener(new MouseAdapter() {
                 @Override
@@ -54,7 +54,7 @@ public class Interfaz extends JFrame {
             if (estado == 0) {
                 g.setColor(Color.WHITE);
             } else if (estado == 1) {
-                g.setColor(Color.RED);
+                g.setColor(Color.BLACK);
             }
             g.fillRect(0, 0, getWidth(), getHeight());
         }
