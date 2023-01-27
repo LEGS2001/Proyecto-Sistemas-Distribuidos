@@ -11,6 +11,7 @@ public class Tablero {
         
         int barcos_pequeños = 0;
         int barcos_grandes = 0;
+        int num_barco = 1;
 
         Random random = new Random();
 
@@ -25,15 +26,17 @@ public class Tablero {
 
             if (orientacion == 0){ // el barco está orientado horizontalmente
                 if (tablero[fila][col] == 0 && tablero[fila][col + 1] == 0){ // revisa que no exista ningún barco en las posiciones
-                    tablero[fila][col] = 1;
-                    tablero[fila][col + 1] = 1;
+                    tablero[fila][col] = num_barco;
+                    tablero[fila][col + 1] = num_barco;
                     barcos_pequeños++;
+                    num_barco++;
                 } 
             } else { // el barco está ubicado verticalmente
                 if (tablero[fila][col] == 0 && tablero[fila + 1][col] == 0){ // revisa que no exista ningún barco en las posiciones
-                    tablero[fila][col] = 1;
-                    tablero[fila + 1][col] = 1;
+                    tablero[fila][col] = num_barco;
+                    tablero[fila + 1][col] = num_barco;
                     barcos_pequeños++;
+                    num_barco++;
                 } 
             }
         }
@@ -49,17 +52,19 @@ public class Tablero {
 
             if (orientacion == 0){ // el barco está orientado horizontalmente
                 if (tablero[fila][col] == 0 && tablero[fila][col + 1] == 0 && tablero[fila][col + 2] == 0){ // revisa que no exista ningún barco en las posiciones
-                    tablero[fila][col] = 1;
-                    tablero[fila][col + 1] = 1;
-                    tablero[fila][col + 2] = 1;
+                    tablero[fila][col] = num_barco;
+                    tablero[fila][col + 1] = num_barco;
+                    tablero[fila][col + 2] = num_barco;
                     barcos_grandes++;
+                    num_barco++;
                 } 
             } else { // el barco está ubicado verticalmente
                 if (tablero[fila][col] == 0 && tablero[fila + 1][col] == 0 && tablero[fila + 2][col] == 0){ // revisa que no exista ningún barco en las posiciones
-                    tablero[fila][col] = 1;
-                    tablero[fila + 1][col] = 1;
-                    tablero[fila + 2][col] = 1;
+                    tablero[fila][col] = num_barco;
+                    tablero[fila + 1][col] = num_barco;
+                    tablero[fila + 2][col] = num_barco;
                     barcos_grandes++;
+                    num_barco++;
                 } 
             }
         }
