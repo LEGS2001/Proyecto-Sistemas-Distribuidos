@@ -5,8 +5,8 @@ import java.awt.event.*;
 public class GUI extends JFrame {
     private Celda[][] grid;
 
-    public GUI(int[][] jugador) {
-        setTitle("Batalla de Barcos");
+    public GUI(int[][] jugador, String nombre) {
+        setTitle(nombre);
         setSize(700, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -33,8 +33,6 @@ public class GUI extends JFrame {
         private int tamaño_celda = 100;
 
         public Celda() {
-
-
             setPreferredSize(new Dimension(tamaño_celda, tamaño_celda));
             setBorder(BorderFactory.createLineBorder(Color.GRAY, 3));
 

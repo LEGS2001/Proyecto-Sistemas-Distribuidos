@@ -1,6 +1,8 @@
 import java.util.Random;
 
 public class Tablero {
+
+    // HACER QUE EL TABLERO SE CREE COMO CONSTRUCTOR
     public int[][] crearTablero(){
 
         final int FILAS = 7;
