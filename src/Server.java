@@ -16,6 +16,7 @@ public class Server {
 
 		//turno del jugador actual
 		int turno = 0;
+		Boolean juego_iniciado = false;
 			
 		while(true) {
 			
@@ -33,10 +34,27 @@ public class Server {
 			String message = new String(buffer).trim();
 			System.out.println("Received: " + message);
 
-			System.out.println(jugadores.size());
+			// ya se conectaron los dos jugadores y se puede jugar
+			if (juego_iniciado){
+				int fila = Character.getNumericValue(message.charAt(0)) - 10;
+				int col = Character.getNumericValue(message.charAt(1) - 1);
+				System.out.println("Golpearas la casilla " + fila + "," + col);
 
-			System.out.println(direcciones.size());
+				String movimiento = Integer.toString(fila) + Integer.toString(col);
+				buffer = movimiento.getBytes();
+				// IMPLEMENTAR LA LOGICA DEL JUEGO SEGUN EL TURNO Y EL MENSAJE RECIBIDO // EL MESSAGE ES EL MOVIMIENTO RECIBIDO 
+				if (senders_address.equals(direcciones.get(0)) && senders_port == puertos.get(0)){
+					System.out.println("Jugador 1 disparó");
+					packet = new DatagramPacket(buffer, buffer.length, direcciones.get(1), puertos.get(1));
+					socket.send(packet);
+				}
+				if (senders_address.equals(direcciones.get(1)) && senders_port == puertos.get(1)){
+					System.out.println("Jugador 2 disparó");
+					packet = new DatagramPacket(buffer, buffer.length, direcciones.get(0), puertos.get(0));
+					socket.send(packet);
 
+				}
+			}
 			// si hay menos de dos jugadores, añade los tableros a la lista
 			if (jugadores.size() < 2){
 				jugadores.add(message);
@@ -52,15 +70,7 @@ public class Server {
 				buffer = message.getBytes();
 				packet = new DatagramPacket(buffer, buffer.length, direcciones.get(1), puertos.get(1));
 				socket.send(packet);
-			}
-
-			// ya se conectaron los dos jugadores y se puede jugar
-			if (jugadores.size() > 2){
-				if (turno == 0){
-					System.out.println("Turno finalizado");
-				} else {
-					System.out.println("Turno finalizado");
-				}
+				juego_iniciado = true;
 			}
 		}
 	}

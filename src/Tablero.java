@@ -8,7 +8,6 @@ public class Tablero {
         final int FILAS = 7;
         final int COLUMNAS = 6;
 
-
         int[][] tablero = new int[FILAS][COLUMNAS];
         
         int barcos_pequeños = 0;
