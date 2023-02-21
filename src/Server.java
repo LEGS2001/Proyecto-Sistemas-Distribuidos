@@ -14,13 +14,36 @@ public class Server {
 		ArrayList<InetAddress> direcciones = new ArrayList<InetAddress>();
 		ArrayList<Integer> puertos = new ArrayList<Integer>();
 
+		//turno del jugador actual
+		int turno = 0;
+			
 		while(true) {
+			
 			byte[] buffer = new byte[1500]; // MTU = 1500
 			DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 			
+			socket.receive(packet); // retreiving client's message
+
+			InetAddress senders_address = packet.getAddress();
+			int senders_port = packet.getPort();
+
+			direcciones.add(senders_address);
+			puertos.add(senders_port);
+
+			String message = new String(buffer).trim();
+			System.out.println("Received: " + message);
+
+			System.out.println(jugadores.size());
+
+			System.out.println(direcciones.size());
+
+			// si hay menos de dos jugadores, añade los tableros a la lista
+			if (jugadores.size() < 2){
+				jugadores.add(message);
+			}
 			// cuando hay dos jugadores conectados, le envia el tablero del enemigo a cada uno de ellos
 			if (direcciones.size() == 2){
-				String message = jugadores.get(1);
+				message = jugadores.get(1);
 				buffer = message.getBytes();
 				packet = new DatagramPacket(buffer, buffer.length, direcciones.get(0), puertos.get(0));
 				socket.send(packet);
@@ -31,18 +54,14 @@ public class Server {
 				socket.send(packet);
 			}
 
-			socket.receive(packet); // retreiving client's message
-
-			String message = new String(buffer).trim();
-			System.out.println("Received: " + message);
-
-			jugadores.add(message);
-
-			InetAddress senders_address = packet.getAddress();
-			int senders_port = packet.getPort();
-
-			direcciones.add(senders_address);
-			puertos.add(senders_port);
+			// ya se conectaron los dos jugadores y se puede jugar
+			if (jugadores.size() > 2){
+				if (turno == 0){
+					System.out.println("Turno finalizado");
+				} else {
+					System.out.println("Turno finalizado");
+				}
+			}
 		}
 	}
 	

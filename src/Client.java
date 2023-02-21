@@ -10,8 +10,7 @@ public class Client {
 
 	public Client() throws Exception{
 		DatagramSocket socket = new DatagramSocket();
-		// Scanner keyboard = new Scanner(System.in);
-		// String message = keyboard.nextLine();
+		Scanner teclado = new Scanner(System.in);
 
         Tablero tablero = new Tablero();
         int[][] jugador = tablero.crearTablero();
@@ -54,8 +53,13 @@ public class Client {
 			}
 			System.out.println();
 
-			System.out.println("Ingrese su siguiente movimiento: ");
+			System.out.println("Ingrese su siguiente movimiento (Ejemplo -> A1): ");
 
+			// DE AQUI PARA ABAJO (HASTA SOCKET.SEND) ES WIP
+			message = teclado.nextLine();
+			buffer = message.getBytes();
+			packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName("127.0.0.1"), 2020);
+			socket.send(packet);
 
 		}
 	}
