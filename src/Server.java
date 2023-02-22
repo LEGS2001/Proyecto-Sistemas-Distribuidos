@@ -15,7 +15,6 @@ public class Server {
 		ArrayList<Integer> puertos = new ArrayList<Integer>();
 
 		//turno del jugador actual
-		int turno = 0;
 		Boolean juego_iniciado = false;
 			
 		while(true) {
@@ -42,7 +41,8 @@ public class Server {
 
 				String movimiento = Integer.toString(fila) + Integer.toString(col);
 				buffer = movimiento.getBytes();
-				// IMPLEMENTAR LA LOGICA DEL JUEGO SEGUN EL TURNO Y EL MENSAJE RECIBIDO // EL MESSAGE ES EL MOVIMIENTO RECIBIDO 
+				
+				// se recibe el mensaje de cada jugador con su movimiento, y se lo envia al jugador contrario
 				if (senders_address.equals(direcciones.get(0)) && senders_port == puertos.get(0)){
 					System.out.println("Jugador 1 disparó");
 					packet = new DatagramPacket(buffer, buffer.length, direcciones.get(1), puertos.get(1));
