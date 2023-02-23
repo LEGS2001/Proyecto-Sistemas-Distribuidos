@@ -9,7 +9,7 @@ public class Server {
 		
 		DatagramSocket socket = new DatagramSocket(2020);
 		System.out.println("El servidor esta online.");
-
+ 
 		ArrayList<String> jugadores = new ArrayList<String>();
 		ArrayList<InetAddress> direcciones = new ArrayList<InetAddress>();
 		ArrayList<Integer> puertos = new ArrayList<Integer>();

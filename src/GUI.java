@@ -39,7 +39,7 @@ public class GUI extends JFrame {
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    if (e.getButton() == 1){ // click izquierdo // HAY UN BUG QUE AL DAR DOBLE CLICK SE QUEDA PERMANENTE EN ESTADO 6
+                    if (e.getButton() == 1 && estado != 6){ // click izquierdo
                         estado_temp = estado;
                         estado = 6;
                         repaint();

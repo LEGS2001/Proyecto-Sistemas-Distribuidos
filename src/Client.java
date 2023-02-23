@@ -11,6 +11,11 @@ public class Client {
         Tablero tablero = new Tablero();
         int[][] jugador = tablero.crearTablero();
 
+		GUI gui = new GUI(jugador, "Jugador");
+        gui.setVisible(true);
+
+		int puntaje = 0;
+
 		// crea el tablero enemigo con el mensaje obtenido del servidor
 		int[][] jugador_enemigo = new int[7][6];
 
@@ -75,6 +80,9 @@ public class Client {
 			}
 
 			// pide el movimiento por teclado (Ejemplo -> C6) para enviarlo al servidor
+			// INTENTAR IMPLEMENTAR QUE SEAN 5 ATAQUES POR RONDA 
+			// posiblemente enviar un mensaje de 10 caracteres, cada 2 equivalente a una posicion
+			// de ahi en el servidor leer cada dos caracteres
 			System.out.println("Ingrese su siguiente movimiento (Desde A1 -> F7): ");
 			message = teclado.nextLine();
 			System.out.println("==================");
@@ -87,7 +95,7 @@ public class Client {
 			packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName("127.0.0.1"), 2020);
 			socket.send(packet);
 
-			// recibe el movimiento que realizo el jugador enemigo
+			// recibe el movimiento que realizo el jugador enemigo 
 			buffer = new byte[1500];
 			packet = new DatagramPacket(buffer, buffer.length);
 			socket.receive(packet);
@@ -95,14 +103,15 @@ public class Client {
 			String fila = Character.toString(message.charAt(1)); // fila empezando desde 0
 			String col = Character.toString(message.charAt(0)); // columna empezando desde 0
 
-
 			// comprueba si se ha golpeado un barco enemigo
 			if (jugador_enemigo[(col_ataque)][(fila_ataque)] == 0 || jugador_enemigo[(col_ataque)][(fila_ataque)] == 9){
 				System.out.println("Has fallado");
 				jugador_enemigo[(col_ataque)][(fila_ataque)] = 9;
+				puntaje = puntaje - 10;
 			} else {
 				System.out.println("Has golpeado un barco enemigo!");
 				jugador_enemigo[(col_ataque)][(fila_ataque)] = 9;
+				puntaje = puntaje + 10;
 			}
 
 			// comprueba si un barco ha sido golpeado o no
@@ -137,6 +146,8 @@ public class Client {
 				}
 			}
 			System.out.println();
+
+			System.out.println("TU PUNTAJE ACTUAL ES: " + puntaje);
 
 		}
 	}
