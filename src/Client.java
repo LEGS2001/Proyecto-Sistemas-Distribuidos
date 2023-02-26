@@ -15,6 +15,8 @@ public class Client {
         gui.setVisible(true);
 
 		int puntaje = 0;
+		int golpes_dados = 0;
+		int golpes_recibidos = 0;
 
 		// crea el tablero enemigo con el mensaje obtenido del servidor
 		int[][] jugador_enemigo = new int[7][6];
@@ -112,6 +114,7 @@ public class Client {
 				System.out.println("Has golpeado un barco enemigo!");
 				jugador_enemigo[(col_ataque)][(fila_ataque)] = 9;
 				puntaje = puntaje + 10;
+				golpes_dados++;
 			}
 
 			// comprueba si un barco ha sido golpeado o no
@@ -121,6 +124,7 @@ public class Client {
 			} else {
 				System.out.println("Uno de tus barcos ha sido golpeado");
 				jugador[Integer.parseInt(fila)][Integer.parseInt(col)] = 9;
+				golpes_recibidos++;
 			}
 
 			// reimprime el tablero con un 9 en los las posiciones que han sido golpeadas
@@ -148,6 +152,16 @@ public class Client {
 			System.out.println();
 
 			System.out.println("TU PUNTAJE ACTUAL ES: " + puntaje);
+
+			if (golpes_dados == 12){
+				System.out.println("Has ganado!!!");
+				break;
+			}
+			if (golpes_recibidos == 12){
+				System.out.println("Has perdido!!!");
+				break;
+			}
+
 
 		}
 	}
