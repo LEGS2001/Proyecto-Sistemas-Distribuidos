@@ -52,9 +52,9 @@ public class Server {
 					System.out.println("Jugador 2 disparó");
 					packet = new DatagramPacket(buffer, buffer.length, direcciones.get(0), puertos.get(0));
 					socket.send(packet);
-
 				}
 			}
+			
 			// si hay menos de dos jugadores, añade los tableros a la lista
 			if (jugadores.size() < 2){
 				jugadores.add(message);
