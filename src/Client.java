@@ -7,7 +7,7 @@ public class Client {
 	public Client() throws Exception{
 		DatagramSocket socket = new DatagramSocket();
 		Scanner teclado = new Scanner(System.in);
-
+		
         Tablero tablero = new Tablero();
         int[][] jugador = tablero.crearTablero();
 
@@ -27,6 +27,10 @@ public class Client {
 				enemigo[i][j] = "■";
 			}
 		}
+
+		// mostrar el gui enemigo
+		GUI_Enemigo gui_enemigo = new GUI_Enemigo(enemigo, "Enemigo");
+		gui_enemigo.setVisible(true);
 
 		// imprime el tablero del jugador
 		System.out.print("Tablero: ");
@@ -68,30 +72,18 @@ public class Client {
 						letra++;
 					}
 				}
-
-				// System.out.print("Tablero enemigo: ");
-				// for (int i = 0; i < jugador_enemigo.length; i++){
-				// 	System.out.println();
-				// 	for (int j = 0; j < jugador_enemigo[0].length; j++){
-				// 		System.out.print(jugador_enemigo[i][j] + " ");
-				// 	}
-				// }
-				// System.out.println();
-
 				juego_iniciado = true;
 			}
 
 			// pide el movimiento por teclado (Ejemplo -> C6) para enviarlo al servidor
-			// INTENTAR IMPLEMENTAR QUE SEAN 5 ATAQUES POR RONDA 
-			// posiblemente enviar un mensaje de 10 caracteres, cada 2 equivalente a una posicion
-			// de ahi en el servidor leer cada dos caracteres
-			System.out.println("Ingrese su siguiente movimiento (Desde A1 -> F7): ");
-			message = teclado.nextLine();
+			System.out.println("Seleccione una casilla y luego presione enter en la linea de comandos: ");
+			teclado.nextLine();
+			message = gui.atacar();
 			System.out.println("==================");
 
-			int fila_ataque = Character.getNumericValue(message.charAt(0)) - 10;
-			int col_ataque = Character.getNumericValue(message.charAt(1) - 1);
-			enemigo[col_ataque][fila_ataque] = "X";
+			int fila_ataque = Character.getNumericValue(message.charAt(1));
+			int col_ataque = Character.getNumericValue(message.charAt(0));
+			// enemigo[col_ataque][fila_ataque] = "X";
 
 			buffer = message.getBytes();
 			packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName("127.0.0.1"), 2020);
@@ -102,16 +94,18 @@ public class Client {
 			packet = new DatagramPacket(buffer, buffer.length);
 			socket.receive(packet);
 			message = new String(buffer).trim();
-			String fila = Character.toString(message.charAt(1)); // fila empezando desde 0
-			String col = Character.toString(message.charAt(0)); // columna empezando desde 0
+			String fila = Character.toString(message.charAt(0)); // fila empezando desde 0
+			String col = Character.toString(message.charAt(1)); // columna empezando desde 0
 
 			// comprueba si se ha golpeado un barco enemigo
 			if (jugador_enemigo[(col_ataque)][(fila_ataque)] == 0 || jugador_enemigo[(col_ataque)][(fila_ataque)] == 9){
 				System.out.println("Has fallado");
+				enemigo[col_ataque][fila_ataque] = "X";
 				jugador_enemigo[(col_ataque)][(fila_ataque)] = 9;
 				puntaje = puntaje - 10;
 			} else {
 				System.out.println("Has golpeado un barco enemigo!");
+				enemigo[col_ataque][fila_ataque] = "O";
 				jugador_enemigo[(col_ataque)][(fila_ataque)] = 9;
 				puntaje = puntaje + 10;
 				golpes_dados++;
@@ -151,6 +145,11 @@ public class Client {
 			}
 			System.out.println();
 
+			gui_enemigo.actualizar(enemigo);
+			
+
+
+
 			System.out.println("TU PUNTAJE ACTUAL ES: " + puntaje);
 
 			if (golpes_dados == 12){
@@ -164,6 +163,7 @@ public class Client {
 
 
 		}
+		
 	}
 	
 	public static void main(String[] args) {

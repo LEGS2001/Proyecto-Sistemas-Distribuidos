@@ -35,8 +35,8 @@ public class Server {
 
 			// ya se conectaron los dos jugadores y se puede jugar
 			if (juego_iniciado){
-				int fila = Character.getNumericValue(message.charAt(0)) - 10;
-				int col = Character.getNumericValue(message.charAt(1) - 1);
+				int fila = Character.getNumericValue(message.charAt(0));
+				int col = Character.getNumericValue(message.charAt(1));
 				System.out.println("Golpearas la casilla " + fila + "," + col);
 
 				String movimiento = Integer.toString(fila) + Integer.toString(col);
